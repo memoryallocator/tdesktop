@@ -196,14 +196,6 @@ void TopBarWidget::onSearch() {
 	}
 }
 
-void TopBarWidget::onCall() {
-	if (const auto peer = _activeChat.peer()) {
-		if (const auto user = peer->asUser()) {
-			Core::App().calls().startOutgoingCall(user, false);
-		}
-	}
-}
-
 void TopBarWidget::showMenu() {
 	if (!_activeChat || _menu) {
 		return;

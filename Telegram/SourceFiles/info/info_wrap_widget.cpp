@@ -475,41 +475,6 @@ bool WrapWidget::closeByOutsideClick() const {
 	return !_controller->canSaveChangesNow();
 }
 
-void WrapWidget::addProfileCallsButton() {
-	Expects(_topBar != nullptr);
-
-	const auto peer = key().peer();
-	const auto user = peer ? peer->asUser() : nullptr;
-	if (!user
-		|| user->sharedMediaInfo()
-		|| !user->session().serverConfig().phoneCallsEnabled.current()) {
-		return;
-	}
-
-	user->session().changes().peerFlagsValue(
-		user,
-		Data::PeerUpdate::Flag::HasCalls
-	) | rpl::filter([=] {
-		return user->hasCalls();
-	}) | rpl::take(
-		1
-	) | rpl::start_with_next([=] {
-		_topBar->addButton(
-			base::make_unique_q<Ui::IconButton>(
-				_topBar,
-				(wrap() == Wrap::Layer
-					? st::infoLayerTopBarCall
-					: st::infoTopBarCall))
-		)->addClickHandler([=] {
-			Core::App().calls().startOutgoingCall(user, false);
-		});
-	}, _topBar->lifetime());
-
-	if (user && user->callsStatus() == UserData::CallsStatus::Unknown) {
-		user->updateFull();
-	}
-}
-
 void WrapWidget::addProfileNotificationsButton() {
 	Expects(_topBar != nullptr);
 

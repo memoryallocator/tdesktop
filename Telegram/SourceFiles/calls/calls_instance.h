@@ -36,7 +36,6 @@ public:
 	Instance();
 	~Instance();
 
-	void startOutgoingCall(not_null<UserData*> user, bool video);
 	void handleUpdate(
 		not_null<Main::Session*> session,
 		const MTPUpdate &update);

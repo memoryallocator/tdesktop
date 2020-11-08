@@ -80,7 +80,6 @@ public:
 
 	enum class Type {
 		Incoming,
-		Outgoing,
 	};
 	Call(not_null<Delegate*> delegate, not_null<UserData*> user, Type type, bool video);
 
@@ -160,7 +159,6 @@ public:
 	}
 
 	[[nodiscard]] not_null<Webrtc::VideoTrack*> videoIncoming() const;
-	[[nodiscard]] not_null<Webrtc::VideoTrack*> videoOutgoing() const;
 
 	crl::time getDurationMs() const;
 	float64 getWaitingSoundPeakValue() const;
@@ -197,7 +195,6 @@ private:
 		FinishType type,
 		const MTPPhoneCallDiscardReason &reason
 			= MTP_phoneCallDiscardReasonDisconnect());
-	void startOutgoing();
 	void startIncoming();
 	void startWaitingTrack();
 	void sendSignalingData(const QByteArray &data);
@@ -221,7 +218,6 @@ private:
 	void setSignalBarCount(int count);
 	void destroyController();
 
-	void setupOutgoingVideo();
 	void updateRemoteMediaState(
 		tgcalls::AudioState audio,
 		tgcalls::VideoState video);
@@ -229,7 +225,7 @@ private:
 	const not_null<Delegate*> _delegate;
 	const not_null<UserData*> _user;
 	MTP::Sender _api;
-	Type _type = Type::Outgoing;
+	Type _type;
 	rpl::variable<State> _state = State::Starting;
 	rpl::variable<RemoteAudioState> _remoteAudioState = RemoteAudioState::Active;
 	rpl::variable<Webrtc::VideoState> _remoteVideoState;
@@ -258,7 +254,6 @@ private:
 	std::unique_ptr<tgcalls::Instance> _instance;
 	std::shared_ptr<tgcalls::VideoCaptureInterface> _videoCapture;
 	const std::unique_ptr<Webrtc::VideoTrack> _videoIncoming;
-	const std::unique_ptr<Webrtc::VideoTrack> _videoOutgoing;
 
 	std::unique_ptr<Media::Audio::Track> _waitingTrack;
 

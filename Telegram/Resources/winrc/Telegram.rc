@@ -60,12 +60,12 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Telegram FZ-LLC"
-            VALUE "FileDescription", "Telegram Desktop"
-            VALUE "FileVersion", "2.4.9.0"
+            VALUE "CompanyName", "Telegram FZ-LLC, Nikolai Pakharev"
+            VALUE "FileDescription", "Telegram Desktop With No Outgoing Calls"
+            VALUE "FileVersion", "2.4.9.0 No Outgoing Calls"
             VALUE "LegalCopyright", "Copyright (C) 2014-2020"
-            VALUE "ProductName", "Telegram Desktop"
-            VALUE "ProductVersion", "2.4.9.0"
+            VALUE "ProductName", "Telegram Desktop With No Outgoing Calls"
+            VALUE "ProductVersion", "2.4.9.0 No Outgoing Calls"
         END
     END
     BLOCK "VarFileInfo"

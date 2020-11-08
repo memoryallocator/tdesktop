@@ -38,23 +38,6 @@ Instance::Instance() = default;
 
 Instance::~Instance() = default;
 
-void Instance::startOutgoingCall(not_null<UserData*> user, bool video) {
-	if (alreadyInCall()) { // Already in a call.
-		_currentCallPanel->showAndActivate();
-		return;
-	}
-	if (user->callsStatus() == UserData::CallsStatus::Private) {
-		// Request full user once more to refresh the setting in case it was changed.
-		user->session().api().requestFullPeer(user);
-		Ui::show(Box<InformBox>(
-			tr::lng_call_error_not_available(tr::now, lt_user, user->name)));
-		return;
-	}
-	requestPermissionsOrFail(crl::guard(this, [=] {
-		createCall(user, Call::Type::Outgoing, video);
-	}));
-}
-
 void Instance::callFinished(not_null<Call*> call) {
 	crl::on_main(call, [=] {
 		destroyCall(call);
